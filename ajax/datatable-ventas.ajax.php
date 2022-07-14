@@ -50,7 +50,7 @@ class TablaVentas{
 			TRAEMOS LAS ACCIONES
 			=============================================*/
 
-		  	$botones = "<div class='btn-group'><button class='btn btn-primary agregarProducto' idProducto='".$productos[$i]["id"]."' recuperarBoton>Agregar</button></div>";
+		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' idProducto='".$productos[$i]["id"]."'>Agregar</button></div>"; 
 
 		  	$datosJson .= '[
 			      "'.($i + 1).'",
