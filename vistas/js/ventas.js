@@ -265,7 +265,7 @@ $(".btnAgregarProducto").click(function(){
 
 	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" name="nuevoPrecioProducto" value="" readonly required>'+
+	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal name="nuevoPrecioProducto" value="" readonly required>'+
 	 
 	            '</div>'+
 	             
@@ -309,6 +309,7 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
 
 	var nuevaCantidadProducto = $(this).parent().parent().parent().children(".ingresoCantidad").children(".nuevaCantidadProducto")
 
+
 	var datos = new FormData()
 	datos.append("nombreProducto", nombreProducto)
 
@@ -325,8 +326,37 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
 
 			$(nuevaCantidadProducto).attr("stock", respuesta["stock"])
 			$(nuevoPrecioProducto).val(respuesta["precio_venta"])
+			$(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"])
 		}	
 
 	})
+
+})
+
+
+/*=============================================
+MODIFICAR CANTIDAD
+=============================================*/
+
+$(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
+
+    var precio = $(this).parent().parent().children(".ingresoPrecio").children().children(".nuevoPrecioProducto")
+    
+	var precioFinal = $(this).val() * precio.attr("precioReal")
+	
+	precio.val(precioFinal)
+
+	if (Number($(this).val()) > Number($(this).attr("stock"))) {
+
+		$(this).val(1)
+
+		swal({
+			title: "No hay stock disponible",
+			text: "¡Solo hay "+$(this).attr("stock")+" unidades!",
+			type: "error",
+			confirmButtonText: "¡Cerrar!"
+		})
+
+	}
 
 })
