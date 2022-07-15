@@ -369,6 +369,16 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 		$(this).val(1)
 
+		/*=============================================
+		SI LA CANTIDAD ES SUPERIOR AL STOCK REGRESAR VALORES INCIALES
+		=============================================*/
+
+		var precioFinal = $(this).val() * precio.attr("precioReal")
+
+		precio.val(precioFinal)
+
+		sumarTotalPrecios()
+
 		swal({
 			title: "No hay stock disponible",
 			text: "¡Solo hay "+$(this).attr("stock")+" unidades!",
