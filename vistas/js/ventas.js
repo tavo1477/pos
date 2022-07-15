@@ -139,6 +139,10 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 	        // SUMAR TODOS LOS PRECIOS
 
 	        sumarTotalPrecios()
+
+	        // AGREGAR IMPUESTO
+
+	        agregarImpuesto()
 		}
 
 	})
@@ -206,13 +210,19 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
 	if ($(".nuevoProducto").children().length == 0) {
 
+		$("#nuevoImpuestoVenta").val(0)
 		$("#nuevoTotalVenta").val(0)
+		$("#nuevoTotalVenta").attr("total", 0)
 
 	} else {
 
 		// SUMAR TODOS LOS PRECIOS
 
 		sumarTotalPrecios()
+
+		// AGREGAR IMPUESTO
+
+	    agregarImpuesto()
 
 	}
 
@@ -307,6 +317,10 @@ $(".btnAgregarProducto").click(function(){
 	        	// SUMAR TODOS LOS PRECIOS
 
 	       		sumarTotalPrecios()	
+
+	       		// AGREGAR IMPUESTO
+
+	        	agregarImpuesto()
 	        	
 	        }
 
@@ -390,7 +404,11 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 	// SUMAR TODOS LOS PRECIOS
 
-	 sumarTotalPrecios()	
+	 sumarTotalPrecios()
+
+	// AGREGAR IMPUESTO
+
+    agregarImpuesto()	
 
 })
 
@@ -419,5 +437,37 @@ function sumarTotalPrecios(){
 	var sumarTotalPrecio = arraySumaPrecio.reduce(sumaaArrayPrecios)
 
 	$("#nuevoTotalVenta").val(sumarTotalPrecio)
+	$("#nuevoTotalVenta").attr("total", sumarTotalPrecio)
 
 }
+
+/*=============================================
+FUNCION AGREGAR IMPUESTO
+=============================================*/
+
+function agregarImpuesto(){
+
+	var impuesto = $("#nuevoImpuestoVenta").val()
+	var precioTotal = $("#nuevoTotalVenta").attr("total")
+
+	var precioImpuesto = Number(precioTotal * impuesto/100)
+
+	var totalConImpuesto = Number(precioImpuesto) + Number(precioTotal)
+
+	$("#nuevoTotalVenta").val(totalConImpuesto)
+
+	$("#nuevoPrecioImpuesto").val(precioImpuesto)
+
+	$("#nuevoPrecioNeto").val(precioTotal)
+
+}
+
+/*=============================================
+CUANDO CAMBIE EL IMPUESTO
+=============================================*/
+
+$("#nuevoImpuestoVenta").change(function(){
+
+	agregarImpuesto()	
+
+})
