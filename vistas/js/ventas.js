@@ -136,6 +136,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	        '</div>') 
 
+
 	        // SUMAR TODOS LOS PRECIOS
 
 	        sumarTotalPrecios()
@@ -143,6 +144,10 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 	        // AGREGAR IMPUESTO
 
 	        agregarImpuesto()
+
+	        // AGRUPANDO PRODUCTOS EN FORMATO JSON
+
+	        listarProductos()
 
 	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -222,11 +227,15 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
 		// SUMAR TODOS LOS PRECIOS
 
-		sumarTotalPrecios()
+		sumarTotalPrecios()		
 
 		// AGREGAR IMPUESTO
 
 	    agregarImpuesto()
+
+	    // AGRUPANDO PRODUCTOS EN FORMATO JSON
+
+	    listarProductos()
 
 	}
 
@@ -324,7 +333,7 @@ $(".btnAgregarProducto").click(function(){
 
 	       		// AGREGAR IMPUESTO
 
-	        	agregarImpuesto()
+	        	agregarImpuesto()	        	
 
 	        	// PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -356,7 +365,7 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
 
 	$.ajax({
 
-		url: "ajax/productos.ajax.php"	,
+		url: "ajax/productos.ajax.php",
 		method: "POST",
 		data: datos,
 		cache: false,
@@ -365,9 +374,15 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
 		dataType: "json",
 		success: function(respuesta){
 
+
 			$(nuevaCantidadProducto).attr("stock", respuesta["stock"])
+			$(nuevaCantidadProducto).attr("nuevoStock", Number(respuesta["stock"])-1)
 			$(nuevoPrecioProducto).val(respuesta["precio_venta"])
 			$(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"])
+
+			// AGRUPANDO PRODUCTOS EN FORMATO JSON
+
+	   		listarProductos()
 		}	
 
 	})
@@ -386,6 +401,10 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 	var precioFinal = $(this).val() * precio.attr("precioReal")
 	
 	precio.val(precioFinal)
+
+	var nuevoStock = Number($(this).attr("stock")) - $(this).val()
+
+	$(this).attr("nuevoStock", nuevoStock)
 
 	if (Number($(this).val()) > Number($(this).attr("stock"))) {
 
@@ -417,6 +436,10 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 	// AGREGAR IMPUESTO
 
     agregarImpuesto()	
+
+    // AGRUPANDO PRODUCTOS EN FORMATO JSON
+
+    listarProductos()
 
 })
 
@@ -572,3 +595,31 @@ $(".formularioVenta").on("change", "input.nuevoValorEfectivo", function(){
 	nuevoCambioEfectivo.val(cambio)
 
 })
+
+/*=============================================
+LISTAR TODOS LOS PRODUCTOS
+=============================================*/
+
+function listarProductos(){
+
+	var listaProductos = []
+
+	var descripcion = $(".nuevaDescripcionProducto")
+
+	var cantidad = $(".nuevaCantidadProducto")
+
+	var precio = $(".nuevoPrecioProducto")
+
+	for(var i = 0; i < descripcion.length; i++){
+
+		listaProductos.push({ "id": $(descripcion[i]).attr("idProducto"),		
+		                      "descripcion": $(descripcion[i]).val(),
+		                      "cantidad": $(cantidad[i]).val(),  
+		                      "stock": $(cantidad[i]).attr("nuevoStock"),
+		                      "precio": $(precio[i]).attr("precioReal"),
+		                      "total": $(precio[i]).val() })
+	}	
+
+	$("#listaProductos").val(JSON.stringify(listaProductos))
+
+}

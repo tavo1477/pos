@@ -138,11 +138,13 @@
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================--> 
 
-                <div class="form-group row nuevoProducto">
+                <div class="form-group row nuevoProducto"> 
 
-                  
+
 
                 </div>
+
+                <input type="hidden" id="listaProductos" name="listaProductos">
 
                 <!--=====================================
                 BOTÓN PARA AGREGAR PRODUCTO
