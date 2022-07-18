@@ -531,7 +531,7 @@ $("#nuevoMetodoPago").change(function(){
 
 					'<span class="input-group-addon"><i class="ion-social-usd"></i></span>'+
 
-					'<input type="text" class="form-control nuevoValorEfectivo" placeholder="0000" required>'+
+					'<input type="text" class="form-control" id="nuevoValorEfectivo" placeholder="0000" required>'+
 
 				'</div>'+
 
@@ -543,7 +543,7 @@ $("#nuevoMetodoPago").change(function(){
 
 					'<span class="input-group-addon"><i class="ion-social-usd"></i></span>'+
 
-					'<input type="text" class="form-control nuevoCambioEfectivo" placeholder="0000" readonly required>'+
+					'<input type="text" class="form-control" id="nuevoCambioEfectivo" placeholder="0000" readonly required>'+
 
 				'</div>'+
 
@@ -553,8 +553,12 @@ $("#nuevoMetodoPago").change(function(){
 
 		// AGREGAR FORMATO Al PRECIO
 
-		$('.nuevoValorEfectivo').number(true, 2)
-		$('.nuevoCambioEfectivo').number(true, 2)
+		$('#nuevoValorEfectivo').number(true, 2)
+		$('#nuevoCambioEfectivo').number(true, 2)
+
+		// Listar método en la entrada
+
+		listarMetodo()
 
 	} else {
 
@@ -584,7 +588,7 @@ $("#nuevoMetodoPago").change(function(){
 CAMBIO EN EFECTIVO
 =============================================*/
 
-$(".formularioVenta").on("change", "input.nuevoValorEfectivo", function(){
+$(".formularioVenta").on("change", "input#nuevoValorEfectivo", function(){
 
 	var efectivo = $(this).val()
 
@@ -593,6 +597,18 @@ $(".formularioVenta").on("change", "input.nuevoValorEfectivo", function(){
 	var nuevoCambioEfectivo = $(this).parent().parent().parent().children(".capturarCambioEfectivo").children().children(".nuevoCambioEfectivo")
 
 	nuevoCambioEfectivo.val(cambio)
+
+})
+
+/*=============================================
+CAMBIO TRANSACCIÓN
+=============================================*/
+
+$(".formularioVenta").on("change", "input#nuevoCodigoTransaccion", function(){
+
+	// Listar método en la entrada
+
+	listarMetodo()
 
 })
 
@@ -621,5 +637,25 @@ function listarProductos(){
 	}	
 
 	$("#listaProductos").val(JSON.stringify(listaProductos))
+
+}
+
+/*=============================================
+LISTAR MÉTODO DE PAGO
+=============================================*/
+
+function listarMetodo(){
+
+	var listaMetodo = ""
+
+	if ($("#nuevoMetodoPago").val() == "efectivo") {
+
+		$("#listaMetodoPago").val("Efectivo")
+
+	} else {
+
+		$("#listaMetodoPago").val($("#nuevoMetodoPago").val()+"-"+$("#nuevoCodigoTransaccion").val())
+
+	}
 
 }

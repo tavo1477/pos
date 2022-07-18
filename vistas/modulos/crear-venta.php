@@ -48,7 +48,7 @@
                     
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <input type="text" class="form-control" id="nuevoVendedor" name="nuevoVendedor" value="<?php echo $_SESSION["nombre"] ?>" readonly>
+                    <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $_SESSION["nombre"] ?>" readonly>
 
                     <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"] ?>">
 
@@ -240,6 +240,8 @@
                   </div>
 
                   <div class="cajasMetodoPago"></div>
+
+                  <input type="hidden" id="listaMetodoPago" name="listaMetodoPago">
 
                 </div>
 
