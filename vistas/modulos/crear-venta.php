@@ -32,7 +32,7 @@
           
           <div class="box-header with-border"></div>
 
-          <form role="form" metohd="post" class="formularioVenta">
+          <form role="form" method="post" class="formularioVenta">
 
             <div class="box-body">
   
@@ -48,16 +48,16 @@
                     
                     <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
-                    <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $_SESSION["nombre"] ?>" readonly>
+                    <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
-                    <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"] ?>">
+                    <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
 
                   </div>
 
                 </div> 
 
                 <!--=====================================
-                ENTRADA DEL VENDEDOR
+                ENTRADA DEL CÓDIGO
                 ======================================--> 
 
                 <div class="form-group">
@@ -66,33 +66,38 @@
                     
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                    <?php 
+                    <?php
 
-                      $item = null;
-                      $valor = null;
+                    $item = null;
+                    $valor = null;
 
-                      $ventas = ControladorVentas::ctrMostrarVentas($item, $valor);
+                    $ventas = ControladorVentas::ctrMostrarVentas($item, $valor);
 
-                      if (!$ventas) {
+                    if(!$ventas){
+
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="10001" readonly>';
+                  
+
+                    }else{
+
+                      foreach ($ventas as $key => $value) {
                         
-                        echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="10001" readonly>';
-
-                      } else {
-
-                        foreach ($ventas as $key => $value) {
-                         
-
-                        }
-
-                        $codigo = $value["codigo"] + 1; 
-
-                        echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value='.$codigo.'" readonly>';
-
+                        
+                      
                       }
 
-                     ?>                   
+                      $codigo = $value["codigo"] + 1;
+
+
+
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="'.$codigo.'" readonly>';
                   
-                  
+
+                    }
+
+                    ?>
+                    
+                    
                   </div>
                 
                 </div>
@@ -109,22 +114,22 @@
                     
                     <select class="form-control" id="seleccionarCliente" name="seleccionarCliente" required>
 
-                      <option value="">Seleccionar cliente</option>
+                    <option value="">Seleccionar cliente</option>
 
-                      <?php
+                    <?php
 
-                        $item = null;
-                        $valor = null;
+                      $item = null;
+                      $valor = null;
 
-                        $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
+                      $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
 
-                         foreach ($categorias as $key => $value) {
+                       foreach ($categorias as $key => $value) {
 
-                           echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
 
-                         }
+                       }
 
-                      ?>
+                    ?>
 
                     </select>
                     
@@ -138,9 +143,9 @@
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================--> 
 
-                <div class="form-group row nuevoProducto"> 
+                <div class="form-group row nuevoProducto">
 
-
+                
 
                 </div>
 
@@ -181,11 +186,11 @@
                             
                             <div class="input-group">
                            
-                              <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" total="" placeholder="0" required>
+                              <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0" required>
 
-                              <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
+                               <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
 
-                              <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
+                               <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
 
                               <span class="input-group-addon"><i class="fa fa-percent"></i></span>
                         
@@ -199,7 +204,9 @@
                            
                               <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
 
-                              <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" placeholder="00000" readonly required>
+                              <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="" placeholder="00000" readonly required>
+
+                              <input type="hidden" name="totalVenta" id="totalVenta">
                               
                         
                             </div>
@@ -230,7 +237,7 @@
                   
                       <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago" required>
                         <option value="">Seleccione método de pago</option>
-                        <option value="efectivo">Efectivo</option>
+                        <option value="Efectivo">Efectivo</option>
                         <option value="TC">Tarjeta Crédito</option>
                         <option value="TD">Tarjeta Débito</option>                  
                       </select>    
@@ -258,6 +265,13 @@
           </div>
 
         </form>
+
+        <?php
+
+          $guardarVenta = new ControladorVentas();
+          $guardarVenta -> ctrCrearVenta();
+          
+        ?>
 
         </div>
             
