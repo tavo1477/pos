@@ -5,14 +5,14 @@ require_once "conexion.php";
 class ModeloVentas{
 
 	/*=====================================
-    ENTRADA DEL VENDEDOR
+    MOSTRAR VENTAS
     ======================================*/
 
 	static public function mdlMostrarVentas($tabla, $item, $valor){
 
-		if ($item != null) {
-			
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY fecha");
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id ASC");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -20,21 +20,22 @@ class ModeloVentas{
 
 			return $stmt -> fetch();
 
-		} else {
+		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY fecha");			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id ASC");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
 
-		}		
-
+		}
+		
 		$stmt -> close();
 
-		$stmt = null;	
-	
+		$stmt = null;
+
 	}
+
 
 	/*=====================================
     REGISTRO DE VENTA

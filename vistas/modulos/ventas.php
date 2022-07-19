@@ -60,29 +60,59 @@
 
         <tbody>
 
-          <tr>
-            
-            <td>1</td>
-            <td>1000123</td>
-            <td>Juan Villegas</td>
-            <td>Julio Gómez</td>
-            <td>TC-12442454</td>
-            <td>$ 1,000.00</td>
-            <td>1,190.00</td>
-            <td>2022-07-06 13:01:20</td>
-            <td>
+          <?php 
+
+            $item = null;
+            $valor = null;
+
+            $respuesta = ControladorVentas::ctrMostrarVentas($item, $valor);
+
+            foreach ($respuesta as $key => $value) {
               
-              <div class="btn-group">
+              echo '<tr>
+            
+                      <td>'.($key+1).'</td>
+                      <td>'.$value["codigo"].'</td>';
 
-                  <button class="btn btn-info"><i class="fa fa-print"></i></button>
+                      $itemCliente = "id";
+                      $valorCliente = $value["id_cliente"];
 
-                  <button class="btn btn-danger"><i class="fa fa-times"></i></button>                    
+                      $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                </div>
+                      echo '<td>'.$respuestaCliente["nombre"].'</td>';
 
-            </td>
+                      $itemUsuario = "id";
+                      $valorUsuario = $value["id_vendedor"];
 
-          </tr>      
+                      $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+
+                      echo '<td>'.$respuestaUsuario["nombre"].'</td>
+
+                      <td>'.$value["metodo_pago"].'</td>
+
+                      <td>'.number_format($value["neto"], 2).'</td>
+
+                      <td>'.number_format($value["total"], 2).'</td>
+
+                      <td>'.$value["fecha"].'</td>
+
+                      <td>
+                        
+                        <div class="btn-group">
+
+                            <button class="btn btn-info"><i class="fa fa-print"></i></button>
+
+                            <button class="btn btn-danger"><i class="fa fa-times"></i></button>                    
+
+                          </div>
+
+                      </td>
+
+                    </tr>';
+
+            }
+
+           ?>              
           
         </tbody>
 
