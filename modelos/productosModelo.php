@@ -150,7 +150,6 @@ class ModeloProductos{
 		$stmt -> close();
 
 		$stmt = null;
-
 	}
 
 
