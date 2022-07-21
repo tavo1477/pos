@@ -617,33 +617,34 @@ $(".formularioVenta").on("change", "input#nuevoCodigoTransaccion", function(){
 
 
 })
+
+
 /*=============================================
 LISTAR TODOS LOS PRODUCTOS
 =============================================*/
 
-function listarProductos() {
+function listarProductos(){
 
-	var listaProductos = []
+	var listaProductos = [];
 
-	var descripcion = $(".nuevaDescripcionProducto")
+	var descripcion = $(".nuevaDescripcionProducto");
 
-	var cantidad = $(".nuevaCantidadProducto")
+	var cantidad = $(".nuevaCantidadProducto");
 
-	var precio = $(".nuevoPrecioProducto")
+	var precio = $(".nuevoPrecioProducto");
 
-	for (var i = 0; i < descripcion.length; i++) {
+	for(var i = 0; i < descripcion.length; i++){
 
-		listaProductos.push({
-			"id": $(descripcion[i]).attr("idProducto"),
-			"descripcion": $(descripcion[i]).val(),
-			"cantidad": $(cantidad[i]).val(),
-			"stock": $(cantidad[i]).attr("nuevoStock"),
-			"precio": $(precio[i]).attr("precioReal"),
-			"total": $(precio[i]).val()
-		})
+		listaProductos.push({ "id" : $(descripcion[i]).attr("idProducto"), 
+							  "descripcion" : $(descripcion[i]).val(),
+							  "cantidad" : $(cantidad[i]).val(),
+							  "stock" : $(cantidad[i]).attr("nuevoStock"),
+							  "precio" : $(precio[i]).attr("precioReal"),
+							  "total" : $(precio[i]).val()})
+
 	}
 
-	$("#listaProductos").val(JSON.stringify(listaProductos))
+	$("#listaProductos").val(JSON.stringify(listaProductos)); 
 
 }
 
@@ -651,21 +652,22 @@ function listarProductos() {
 LISTAR MÉTODO DE PAGO
 =============================================*/
 
-function listarMetodo() {
+function listarMetodos(){
 
-	var listaMetodo = ""
+	var listaMetodos = "";
 
-	if ($("#nuevoMetodoPago").val() == "Efectivo") {
+	if($("#nuevoMetodoPago").val() == "Efectivo"){
 
-		$("#listaMetodoPago").val("Efectivo")
+		$("#listaMetodoPago").val("Efectivo");
 
-	} else {
+	}else{
 
-		$("#listaMetodoPago").val($("#nuevoMetodoPago").val() + "-" + $("#nuevoCodigoTransaccion").val())
+		$("#listaMetodoPago").val($("#nuevoMetodoPago").val()+"-"+$("#nuevoCodigoTransaccion").val());
 
 	}
 
 }
+
 
 /*=============================================
 BOTON EDITAR VENTA
