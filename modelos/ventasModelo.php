@@ -37,13 +37,13 @@ class ModeloVentas{
 	}
 
 
-	/*=====================================
-    REGISTRO DE VENTA
-    ======================================*/
+	/*=============================================
+	REGISTRO DE VENTA
+	=============================================*/
 
-    static public function mdlIngresarVenta($tabla, $datos){
+	static public function mdlIngresarVenta($tabla, $datos){
 
-    	$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, impuesto, neto, total, metodo_pago) VALUES (:codigo, :id_cliente, :id_vendedor, :productos, :impuesto, :neto, :total, :metodo_pago)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, impuesto, neto, total, metodo_pago) VALUES (:codigo, :id_cliente, :id_vendedor, :productos, :impuesto, :neto, :total, :metodo_pago)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
@@ -65,11 +65,11 @@ class ModeloVentas{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 
-    }
+	}
 
-    /*=============================================
+	/*=============================================
 	EDITAR VENTA
 	=============================================*/
 
@@ -97,7 +97,7 @@ class ModeloVentas{
 		}
 
 		$stmt->close();
-		$stmt = null;		
+		$stmt = null;
 
 	}
 

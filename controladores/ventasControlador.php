@@ -121,71 +121,70 @@ class ControladorVentas{
 
 	}
 
-    /*=====================================
-    EDITAR VENTA
-    ======================================*/
+    /*=============================================
+	EDITAR VENTA
+	=============================================*/
 
-    static public function ctrEditarVenta(){
+	static public function ctrEditarVenta(){
 
 		if(isset($_POST["editarVenta"])){
 
 			/*=============================================
-			FORMATEAR LAS TABLAS DE PRODUCTOS Y LA DE CLIENTES
+			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
 			=============================================*/
-
 			$tabla = "ventas";
 
-		    $item = "codigo";
-		    $valor = $_POST["editarVenta"];
+			$item = "codigo";
+			$valor = $_POST["editarVenta"];
 
-		    $traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
+			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 
-		    /*=============================================
-			REVISAR SI VIENEN PRODUCTOS EDITADOS
+			/*=============================================
+			REVISAR SI VIENE PRODUCTOS EDITADOS
 			=============================================*/
 
-		   	if($_POST["listaProductos"] == ""){
+			if($_POST["listaProductos"] == ""){
 
 				$listaProductos = $traerVenta["productos"];
 				$cambioProducto = false;
+
 
 			}else{
 
 				$listaProductos = $_POST["listaProductos"];
 				$cambioProducto = true;
-								
 			}
 
-			if ($cambioProducto) {			
-			
-			    $productos = json_decode($traerVenta["productos"], true);
+			if($cambioProducto){
 
-			    $totalProductosComprados = array();
+				$productos =  json_decode($traerVenta["productos"], true);
 
-			    foreach ($productos as $key => $value) {
+				$totalProductosComprados = array();
 
-			    	array_push($totalProductosComprados, $value["cantidad"]);
-			    	
-			    	$tablaProductos = "productos";
+				foreach ($productos as $key => $value) {
 
-			    	$item = "id";
-				    $valor = $value["id"];
+					array_push($totalProductosComprados, $value["cantidad"]);
+					
+					$tablaProductos = "productos";
 
-				    $traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor);
+					$item = "id";
+					$valor = $value["id"];
 
-				    $item1a = "ventas";
+					$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor);
+
+					$item1a = "ventas";
 					$valor1a = $traerProducto["ventas"] - $value["cantidad"];
 
-				    $nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
+					$nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
 
-				    $item1b = "stock";
+					$item1b = "stock";
 					$valor1b = $value["cantidad"] + $traerProducto["stock"];
 
-				 	$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
+					$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
 
-			    }
+				}
 
-			    $tablaClientes = "clientes";
+				$tablaClientes = "clientes";
 
 				$itemCliente = "id";
 				$valorCliente = $_POST["seleccionarCliente"];
@@ -195,8 +194,7 @@ class ControladorVentas{
 				$item1a = "compras";
 				$valor1a = $traerCliente["compras"] - array_sum($totalProductosComprados);
 
-				$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valor);
-
+				$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valorCliente);
 
 				/*=============================================
 				ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
@@ -208,22 +206,22 @@ class ControladorVentas{
 
 				foreach ($listaProductos_2 as $key => $value) {
 
-				   array_push($totalProductosComprados_2, $value["cantidad"]);
+					array_push($totalProductosComprados_2, $value["cantidad"]);
 					
-				   $tablaProductos_2 = "productos";
+					$tablaProductos_2 = "productos";
 
-				    $item_2 = "id";
-				    $valor_2 = $value["id"];
+					$item_2 = "id";
+					$valor_2 = $value["id"];
 
-				    $traerProducto_2 = ModeloProductos::mdlMostrarProductos($tablaProductos_2, $item_2, $valor_2);
+					$traerProducto_2 = ModeloProductos::mdlMostrarProductos($tablaProductos_2, $item_2, $valor_2);
 
 					$item1a_2 = "ventas";
 					$valor1a_2 = $value["cantidad"] + $traerProducto_2["ventas"];
 
-				    $nuevasVentas_2 = ModeloProductos::mdlActualizarProducto($tablaProductos_2, $item1a_2, $valor1a_2, $valor_2);
+					$nuevasVentas_2 = ModeloProductos::mdlActualizarProducto($tablaProductos_2, $item1a_2, $valor1a_2, $valor_2);
 
 					$item1b_2 = "stock";
-					$valor1b_2 = $value["stock"];
+					$valor1b_2 = $traerProducto_2["stock"] - $value["cantidad"];
 
 					$nuevoStock_2 = ModeloProductos::mdlActualizarProducto($tablaProductos_2, $item1b_2, $valor1b_2, $valor_2);
 
@@ -241,21 +239,21 @@ class ControladorVentas{
 
 				$comprasCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1a_2, $valor1a_2, $valor_2);
 
-				$item1b_2 = "ultima_compra";
+				$item1b_2 = "ultima_compra";				
 
 				date_default_timezone_set('America/Costa_Rica');
 
-				$fecha_2 = date('Y-m-d');
-				$hora_2 = date('H:i:s');
-				$valor1b_2 = $fecha.' '.$hora;
+				$fecha = date('Y-m-d');
+				$hora = date('H:i:s');
+				$valor1b_2= $fecha.' '.$hora;
 
-				$compraCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1b_2, $valor1b_2, $valor_2);
+				$fechaCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1b_2, $valor1b_2, $valor_2);
 
 			}
 
 			/*=============================================
 			GUARDAR CAMBIOS DE LA COMPRA
-			=============================================*/		
+			=============================================*/	
 
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
 						   "id_cliente"=>$_POST["seleccionarCliente"],
@@ -265,6 +263,7 @@ class ControladorVentas{
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
 						   "metodo_pago"=>$_POST["listaMetodoPago"]);
+
 
 			$respuesta = ModeloVentas::mdlEditarVenta($tabla, $datos);
 
