@@ -672,6 +672,7 @@ function listarMetodos(){
 /*=============================================
 BOTON EDITAR VENTA
 =============================================*/
+
 $(".tablas").on("click", ".btnEditarVenta", function(){
 
 	var idVenta = $(this).attr("idVenta");
@@ -680,3 +681,31 @@ $(".tablas").on("click", ".btnEditarVenta", function(){
 
 
 })
+
+/*=============================================
+BORRAR VENTA
+=============================================*/
+
+$(".tablas").on("click", ".btnEliminarVenta", function() {
+
+	var idVenta = $(this).attr("idVenta");
+
+	swal({
+		title: '¿Está seguro de borrar la venta?',
+		text: "¡Si no lo está puede cancelar la accíón!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, borrar venta!'
+	}).then((result) => {
+		if (result.value) {
+
+			window.location = "index.php?ruta=ventas&idVenta=" + idVenta;
+		}
+
+	})
+
+})
+
