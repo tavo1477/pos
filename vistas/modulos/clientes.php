@@ -40,7 +40,7 @@
          
          <tr>
            
-           <th style="width:10px">#</th>
+           <<th style="width:10px">#</th>
            <th>Nombre</th>
            <th>Documento ID</th>
            <th>Email</th>
@@ -58,55 +58,57 @@
 
         <tbody>
 
-          <?php 
+          <?php
 
-            $item = null;
-            $valor = null;
+          $item = null;
+          $valor = null;
 
-            $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+          $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
 
-            foreach ($clientes as $key => $value) {
-              
-              echo '<tr>
+          foreach ($clientes as $key => $value) {            
 
-                      <td>'.($key+1).'</td>
+            echo '<tr>
 
-                      <td>'.$value["nombre"].'</td>
+                    <td>'.($key+1).'</td>
 
-                      <td>'.$value["documento"].'</td>
+                    <td>'.$value["nombre"].'</td>
 
-                      <td>'.$value["email"].'</td>
+                    <td>'.$value["documento"].'</td>
 
-                      <td>'.$value["telefono"].'</td>
+                    <td>'.$value["email"].'</td>
 
-                      <td>'.$value["direccion"].'</td>
+                    <td>'.$value["telefono"].'</td>
 
-                      <td>'.$value["fecha_nacimiento"].'</td>
+                    <td>'.$value["direccion"].'</td>
 
-                      <td>'.$value["compras"].'</td>
+                    <td>'.$value["fecha_nacimiento"].'</td>             
 
-                      <td>0000-00-00 00:00:00</td>
+                    <td>'.$value["compras"].'</td>
 
-                      <td>'.$value["fecha"].'</td>
+                    <td>0000-00-00 00:00:00</td>
 
-                      <td>
+                    <td>'.$value["fecha"].'</td>
 
-                        <div class="btn-group">
-                            
-                          <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    <td>
 
-                          <button class="btn btn-danger btnEliminarCliente" idCliente="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                      <div class="btn-group">
+                          
+                        <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
 
-                        </div>  
+                        <button class="btn btn-danger btnEliminarCliente" idCliente="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
-                      </td>
+                      </div>  
 
-                    </tr>';
+                    </td>
 
+                  </tr>';
+          
             }
 
-           ?>        
+        ?>
           
+
+         
         </tbody>
 
        </table>
@@ -251,21 +253,20 @@ MODAL AGREGAR CLIENTE
 
         </div>
 
-        <?php 
-
-          $crearCliente = new ControladorClientes();
-          $crearCliente -> ctrCrearCliente();
-
-         ?>
-
       </form>
+
+      <?php
+
+        $crearCliente = new ControladorClientes();
+        $crearCliente -> ctrCrearCliente();
+
+      ?>
 
     </div>
 
   </div>
 
 </div>
-
 
 <!--=====================================
 MODAL EDITAR CLIENTE
@@ -416,7 +417,7 @@ MODAL EDITAR CLIENTE
 
 <?php
 
-  $borrarCliente = new ControladorClientes();
-  $borrarCliente -> ctrEliminarCliente();
+  $eliminarCliente = new ControladorClientes();
+  $eliminarCliente -> ctrEliminarCliente();
 
-?>  
+?>

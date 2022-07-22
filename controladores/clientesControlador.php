@@ -3,8 +3,8 @@
 class ControladorClientes{
 
 	/*=============================================
-	CREAR CLIENTE
-	=============================================*/	
+	CREAR CLIENTES
+	=============================================*/
 
 	static public function ctrCrearCliente(){
 
@@ -35,8 +35,9 @@ class ControladorClientes{
 						  type: "success",
 						  title: "El cliente ha sido guardado correctamente",
 						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+						  confirmButtonText: "Cerrar",
+						  closeOnConfirm: false
+						  }).then((result) => {
 									if (result.value) {
 
 									window.location = "clientes";
@@ -56,8 +57,9 @@ class ControladorClientes{
 						  type: "error",
 						  title: "¡El cliente no puede ir vacío o llevar caracteres especiales!",
 						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+						  confirmButtonText: "Cerrar",
+						  closeOnConfirm: false
+						  }).then((result) => {
 							if (result.value) {
 
 							window.location = "clientes";
@@ -73,11 +75,11 @@ class ControladorClientes{
 
 		}
 
-	}
+	}	
 
 	/*=============================================
 	MOSTRAR CLIENTES
-	=============================================*/	
+	=============================================*/
 
 	static public function ctrMostrarClientes($item, $valor){
 
@@ -164,10 +166,6 @@ class ControladorClientes{
 	}
 
 	/*=============================================
-	EDITAR CLIENTE
-	=============================================*/
-
-	/*=============================================
 	ELIMINAR CLIENTE
 	=============================================*/
 
@@ -204,5 +202,4 @@ class ControladorClientes{
 		}
 
 	}
-
 }

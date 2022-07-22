@@ -5,8 +5,8 @@ require_once "conexion.php";
 class ModeloClientes{
 
 	/*=============================================
-	CREAR CLIENTE
-	=============================================*/	
+	CREAR CLIENTES
+	=============================================*/
 
 	static public function mdlIngresarCliente($tabla, $datos){
 
@@ -36,12 +36,12 @@ class ModeloClientes{
 
 	/*=============================================
 	MOSTRAR CLIENTES
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlMostrarClientes($tabla, $item, $valor){
 
-		if ($item != null) {
-			
+		if($item != null){
+
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -50,25 +50,25 @@ class ModeloClientes{
 
 			return $stmt -> fetch();
 
-		} else {
+		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
 
-		}		
+		}
 
 		$stmt -> close();
 
-		$stmt = null;	
+		$stmt = null;
 
 	}
 
 	/*=============================================
 	EDITAR CLIENTE
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlEditarCliente($tabla, $datos){
 
@@ -149,6 +149,5 @@ class ModeloClientes{
 		$stmt = null;
 
 	}
-
 
 }
