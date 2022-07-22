@@ -97,6 +97,32 @@ class ModeloVentas{
 		}
 
 		$stmt->close();
+		$stmt = null;		
+
+	}
+
+	/*=============================================
+   	ELIMINAR VENTA
+	=============================================*/	
+	
+	static public function mdlEliminarVenta($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
 		$stmt = null;
 
 	}
