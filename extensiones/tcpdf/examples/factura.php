@@ -1,22 +1,24 @@
-<?php
+<?php 
 
-require_once '../../../controladores/ventasController.php';
-require_once '../../../modelos/ventasModel.php';
+require_once '../../../controladores/ventasControlador.php';
+require_once '../../../modelos/ventasModelo.php';
 
-require_once '../../../controladores/clientesController.php';
-require_once '../../../modelos/clientesModel.php';
+require_once '../../../controladores/clientesControlador.php';
+require_once '../../../modelos/ClientesModelo.php';
 
-require_once '../../../controladores/usuariosController.php';
-require_once '../../../modelos/usuariosModel.php';
+require_once '../../../controladores/UsuarioControlador.php';
+require_once '../../../modelos/UsuarioModelo.php';
 
-require_once '../../../controladores/productosController.php';
-require_once '../../../modelos/productosModel.php';
+require_once '../../../controladores/productosControlador.php';
+require_once '../../../modelos/productosModelo.php';
 
 class ImprimirFactura{
 
 public $codigo;
 
 public function traerImpresionFactura(){
+
+// TRAEMOS LA INFORMACIÓN DE LA VENTA
 
 $itemVenta = "codigo";
 $valorVenta = $this->codigo;
@@ -29,20 +31,19 @@ $neto = number_format($respuestaVenta["neto"],2);
 $impuesto = number_format($respuestaVenta["impuesto"],2);
 $total = number_format($respuestaVenta["total"],2);
 
-// TRAER LA INFORMACIÓN DEL CLIENTE
+// TRAEMOS LA INFORMACIÓN DEL CLIENTE
 
 $itemCliente = "id";
 $valorCliente = $respuestaVenta["id_cliente"];
 
 $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-// TRAER LA INFORMACIÓN DEL VENDEDOR
+// TRAEMOS LA INFORMACIÓN DEL VENDEDOR
 
 $itemVendedor = "id";
 $valorVendedor = $respuestaVenta["id_vendedor"];
 
 $respuestaVendedor = ControladorUsuarios::ctrMostrarUsuarios($itemVendedor, $valorVendedor);
-
 
 require_once('tcpdf_include.php');
 
@@ -93,55 +94,60 @@ $bloque1 = '<table>
 
     </table>';
 
-// output the HTML content
 $pdf->writeHTML($bloque1, true, false, true, false, '');
 
-$bloque2 = '<table style="font-size:10px; padding:5px 10px">
-    
-    <tr>
+//-------------------------------------------------------------------------------
 
-        <td style="border:1px solid #666; background:white; width:390px">
+    $bloque2 = '<table style="font-size:10px; padding:5px 10px">
+
+    	<tr>
+
+	    	<td style="border:1px solid #666; background:white; width:390px">
+
+	    		Cliente: '.$respuestaCliente["nombre"].'
+
+	    	</td>
+
+	    	<td style="border:1px solid #666; background:white; width:150px; text-align:right">
             
-            Cliente: '.$respuestaCliente["nombre"].'
+           		Fecha: '.$fecha.'
 
-        </td>
+       		 </td>
 
-        <td style="border:1px solid #666; background:white; width:150px; text-align:right">
-            
-            Fecha: '.$fecha.'
+    	</tr>
 
-        </td>
-
-    </tr>
-
-    <tr>
+    	<tr>
         
-        <td style="border:1px solid #666; background:white; width:540px;">
+	        <td style="border:1px solid #666; background:white; width:540px;">
 
-            Vendedor: '.$respuestaVendedor["nombre"].'
+	            Vendedor: '.$respuestaVendedor["nombre"].'
 
-        </td>
+	        </td>
 
-    </tr>
+    	</tr>
 
-</table>';
+    </table>';
 
-$pdf->writeHTML($bloque2, true, false, true, false, '');
+    $pdf->writeHTML($bloque2, true, false, true, false, '');
 
-$bloque3 = '<table style="font-size:10px; padding:5px 10px;">
+    //-------------------------------------------------------------------------------
 
-        <tr>
-        
-        <td style="border: 1px solid #666; background-color:white; width:260px; text-align:center">Producto</td>
-        <td style="border: 1px solid #666; background-color:white; width:80px; text-align:center">Cantidad</td>
-        <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center">Valor Unit.</td>
-        <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center">Valor Total</td>
+    $bloque3 = '<table style="font-size:10px; padding:5px 10px">
+
+    	<tr>
+	        
+	        <td style="border: 1px solid #666; background-color:white; width:260px; text-align:center">Producto</td>
+	        <td style="border: 1px solid #666; background-color:white; width:80px; text-align:center">Cantidad</td>
+	        <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center">Valor Unit.</td>
+	        <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center">Valor Total</td>
 
         </tr>
 
     </table>';
 
-$pdf->writeHTML($bloque3, true, false, true, false, '');
+    $pdf->writeHTML($bloque3, true, false, true, false, '');
+
+    //-------------------------------------------------------------------------------
 
 foreach ($productos as $key => $item) {
 
@@ -155,26 +161,25 @@ $valorUnitario = number_format($respuestaProducto["precio_venta"], 2);
 
 $precioTotal = number_format($item["total"], 2);
 
-$bloque4 = '<table style="font-size:10px; padding:5px 10px;">
+$bloque4 = '<table style="font-size:10px;">
 
         <tr>
             
-            <td style="border: 1px solid #666; color:#333; background-color:white; width:260px; text-align:center">
+            <td style="width:260px text-align:center">
                 '.$item["descripcion"].'
-            </td>
+            </td>  
 
-            <td style="border: 1px solid #666; color:#333; background-color:white; width:80px; text-align:center">
+            <td style="width:80px; text-align:center">
                 '.$item["cantidad"].'
-            </td>
+            </td>  
 
-            <td style="border: 1px solid #666; color:#333; background-color:white; width:100px; text-align:center">$ 
+            <td style="width:100px; text-align:center">$ 
                 '.$valorUnitario.'
             </td>
 
-            <td style="border: 1px solid #666; color:#333; background-color:white; width:100px; text-align:center">$ 
+            <td style="width:100px;  text-align:center">$ 
                 '.$precioTotal.'
             </td>
-
 
         </tr>
 
@@ -186,19 +191,19 @@ $pdf->writeHTML($bloque4, true, false, true, false, '');
 
 $bloque5 = '<table style="font-size:10px; padding:5px 10px">
 
-    <tr>
+	<tr>
         
         <td style="color:#333; background;white; width:340px; text-align:center"></td>
 
         <td style="border-bottom:1px solid #666; background:white; width:100px; text-align:center"></td>
-        
+
         <td style="border-bottom:1px solid #666; color:#333; background:white; width:100px; text-align:center"></td>
 
     </tr>
 
     <tr>
-        
-         <td style="border-right:1px solid #666; color:#333; background:white; width:340px; text-align:center"></td>
+
+    	<td style="border-right:1px solid #666; color:#333; background:white; width:340px; text-align:center"></td>
 
          <td style="border:1px solid #666; background:white; width:100px; text-align:center">
             Neto:
@@ -240,9 +245,10 @@ $bloque5 = '<table style="font-size:10px; padding:5px 10px">
 
 </table>';
 
-$pdf->writeHTML($bloque5, true, false, true, false, '');
+ $pdf->writeHTML($bloque5, true, false, true, false, '');
 
-$pdf->Output('factura.pdf', 'I');
+//SALIDA DEL ARCHIVO
+$pdf->Output('factura.pdf');
 
 }
 
@@ -251,3 +257,7 @@ $pdf->Output('factura.pdf', 'I');
 $factura = new ImprimirFactura();
 $factura -> codigo = $_GET["codigo"];
 $factura -> traerImpresionFactura();
+
+
+ ?>
+
