@@ -76,17 +76,18 @@
 
             if(isset($_GET["fechaInicial"])){
 
-              $fechaInicial = $_GET["fechaInicial"];
-              $fechaFinal = $_GET["fechaFinal"];
+            $fechaInicial = $_GET["fechaInicial"];
+            $fechaFinal = $_GET["fechaFinal"];
 
-            }else{
+          }else{
 
-              $fechaInicial = null;
-              $fechaFinal = null;
+            $fechaInicial = null;
+            $fechaFinal = null;
 
           }
-           
+
           $respuesta = ControladorVentas::ctrRangoFechasVentas($fechaInicial, $fechaFinal);
+
 
             foreach ($respuesta as $key => $value) {
               

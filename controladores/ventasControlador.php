@@ -438,8 +438,8 @@ class ControladorVentas{
 	}
 
 	/*=============================================
-	RANGO DE FECHAS
-	=============================================*/
+	RANGO FECHAS
+	=============================================*/	
 
 	static public function ctrRangoFechasVentas($fechaInicial, $fechaFinal){
 
