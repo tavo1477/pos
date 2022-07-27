@@ -181,6 +181,7 @@ session_start();
 <script src="vistas/js/productos.js"></script>
 <script src="vistas/js/clientes.js"></script>
 <script src="vistas/js/ventas.js"></script>
+<script src="vistas/js/reportes.js"></script>
 
 </body>
 </html>
