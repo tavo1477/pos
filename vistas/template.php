@@ -105,6 +105,9 @@ session_start();
     <script src="vistas/bower_components/raphael/raphael.min.js"></script>
     <script src="vistas/bower_components/morris.js/morris.min.js"></script>
 
+    <!-- ChartJS http://www.chartjs.org/-->
+  <script src="vistas/bower_components/chart.js/Chart.js"></script>
+
 </head>
 
 <!--=============================================
