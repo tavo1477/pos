@@ -24,19 +24,43 @@
 
         <div class="box-header with-border">
 
-          <button type="button" class="btn btn-default" id="datarange-btn2">
-          
-            <span>
+            <div class="input-group">
 
-              <i class="fa fa-calendar"></i> Rango de fecha
+              <button type="button" class="btn btn-default" id="datarange-btn2">
+              
+                <span>
 
-            </span>
+                  <i class="fa fa-calendar"></i> Rango de fecha
 
-            <i class="fa fa-caret-down"></i>
+                </span>
 
-          </button> 
+                <i class="fa fa-caret-down"></i>
 
-          <div class="box-tools pull-right"></div>
+              </button>
+
+            </div> 
+
+          <div class="box-tools pull-right">
+
+            <?php  
+
+              if (isset($_GET["fechaInicial"])) {
+                
+                echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'">';
+
+              } else {
+
+                echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte">';
+
+              }
+              
+            ?>
+             
+              <button class="btn btn-success" style="margin-top: 5px;">Descargar reporte en excel</button>
+
+           </a>            
+
+          </div>
 
         </div>
 
