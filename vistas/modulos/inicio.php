@@ -28,7 +28,21 @@
 
          ?>
 
-      </div>           
+      </div> 
+
+      <div class="row">
+          
+        <div class="col-lg-12">
+          
+          <?php 
+
+            include "inicio/grafico-ventas.php";
+
+           ?>
+
+        </div>
+
+      </div>          
 
     </section>
  
