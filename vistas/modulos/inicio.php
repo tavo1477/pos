@@ -36,11 +36,31 @@
           
           <?php 
 
-            include "inicio/grafico-ventas.php";
+            include "reportes/grafico-ventas.php";
 
            ?>
 
         </div>
+
+         <div class="col-lg-6">
+
+          <?php 
+
+            include "reportes/productos-mas-vendidos.php";
+
+           ?>           
+
+         </div>
+
+         <div class="col-lg-6">
+
+          <?php 
+
+            include "inicio/productos-mas-recientes.php";
+
+           ?>           
+
+         </div>
 
       </div>          
 
