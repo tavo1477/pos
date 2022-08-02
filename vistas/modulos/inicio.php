@@ -24,7 +24,11 @@
         
         <?php 
 
-          include "inicio/caja-superiores.php";
+          if ($_SESSION["perfil"] == "Administrador") {
+            
+             include "inicio/caja-superiores.php";
+
+          }         
 
          ?>
 
@@ -36,7 +40,11 @@
           
           <?php 
 
+          if ($_SESSION["perfil"] == "Administrador") {
+
             include "reportes/grafico-ventas.php";
+
+          }   
 
            ?>
 
@@ -46,7 +54,11 @@
 
           <?php 
 
-            include "reportes/productos-mas-vendidos.php";
+            if ($_SESSION["perfil"] == "Administrador") {
+
+              include "reportes/productos-mas-vendidos.php";
+
+            }
 
            ?>           
 
@@ -56,9 +68,38 @@
 
           <?php 
 
-            include "inicio/productos-mas-recientes.php";
+            if ($_SESSION["perfil"] == "Administrador") {
+
+             include "inicio/productos-mas-recientes.php";
+
+            }
 
            ?>           
+
+         </div>
+
+         <div class="col-lg-12">
+           
+          <?php 
+
+            if ($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor") {
+
+              echo '<div class="box box-success text-center">
+
+                      <div class="box-header">
+
+                        <h1>Bienvenid@ ' .$_SESSION["nombre"].'</h1> <br> 
+
+                        <img class="img-fluid" src="'.$_SESSION["foto"].'">
+
+                      </div>
+
+                 </div>';
+
+
+            }
+
+           ?>
 
          </div>
 
