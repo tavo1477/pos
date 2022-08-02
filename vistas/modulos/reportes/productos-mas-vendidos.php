@@ -1,105 +1,105 @@
-<?php 
+<?php
 
-  $item = null;
-  $valor = null;
-  $orden = "ventas";
+$item = null;
+$valor = null;
+$orden = "ventas";
 
-  $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $orden);
+$productos = ControladorProductos::ctrMostrarProductos($item, $valor, $orden);
 
-  $colores = array("red", "green", "yellow", "aqua", "purple" , "blue", "cyan", "magenta", "orange", "gold");
+$colores = array("red","green","yellow","aqua","purple","blue","cyan","magenta","orange","gold");
 
-  $totalVentas = ControladorProductos::ctrMostrarSumaVentas();
-  
- ?>
+$totalVentas = ControladorProductos::ctrMostrarSumaVentas();
+
+
+?>
+
+<!--=====================================
+PRODUCTOS MÁS VENDIDOS
+======================================-->
 
 <div class="box box-default">
-
-    <div class="box-header with-border">
-
+  
+  <div class="box-header with-border">
+  
       <h3 class="box-title">Productos más vendidos</h3>
-
-      <div class="box-tools pull-right">
-
-        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-        </button>
-
-        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-      </div>
 
     </div>
 
-    <div class="box-body">
+  <div class="box-body">
+    
+        <div class="row">
 
-      <div class="row">
+          <div class="col-md-7">
 
-        <div class="col-md-7">
+            <div class="chart-responsive">
+                  
+              <canvas id="pieChart" height="150"></canvas>
+                
+            </div>
 
-          <div class="chart-responsive">
-
-            <canvas id="pieChart" height="150"></canvas>
-
-          </div>
-         
         </div>
-      
-        <div class="col-md-5">
 
+        <div class="col-md-5">
+            
           <ul class="chart-legend clearfix">
 
-            <?php 
+          <?php
 
-             for($i = 0; $i < 10; $i++){
+          for($i = 0; $i < 10; $i++){
 
-                echo ' <li><i class="fa fa-circle-o text-'.$colores[$i].'"></i> '.$productos[$i]["descripcion"].'</li>';
+          echo ' <li><i class="fa fa-circle-o text-'.$colores[$i].'"></i> '.$productos[$i]["descripcion"].'</li>';
 
-             }
+          }
 
-             ?>           
+
+          ?>
+
 
           </ul>
 
         </div>
-    
-      </div>
-    
+
     </div>
-    
+
+    </div>
+
     <div class="box-footer no-padding">
+      
+    <ul class="nav nav-pills nav-stacked">
+      
+       <?php
 
-      <ul class="nav nav-pills nav-stacked">
+            for($i = 0; $i <5; $i++){
+      
+              echo '<li>
+             
+             <a>
 
-        <?php 
+             <img src="'.$productos[$i]["imagen"].'" class="img-thumbnail" width="60px" style="margin-right:10px"> 
+             '.$productos[$i]["descripcion"].'
 
-          for($i = 0; $i < 5; $i++){
+             <span class="pull-right text-'.$colores[$i].'">   
+             '.ceil($productos[$i]["ventas"]*100/$totalVentas["total"]).'%
+             </span>
+              
+             </a>
 
-            echo '<li>
+              </li>';
 
-                    <a href="#">'.$productos[$i]["descripcion"].'
+      }
 
-                      <span class="pull-right text-'.$colores[$i].'">
+      ?>
 
-                        <i class="fa fa-angle-down"></i>
 
-                         '.ceil($productos[$i]["ventas"]*100/$totalVentas["total"]).'%
-
-                      </span>
-
-                    </a>
-
-                  </li>';
-
-          }
-
-         ?>        
-
-      </ul>
+    </ul>
 
     </div>
-  
+
 </div>
 
 <script>
   
+
   // -------------
   // - PIE CHART -
   // -------------
@@ -108,21 +108,20 @@
   var pieChart       = new Chart(pieChartCanvas);
   var PieData        = [
 
-    <?php 
+  <?php
 
-      for($i = 0; $i < 10; $i++){
+  for($i = 0; $i < 10; $i++){
 
-        echo "{
-          value    : ".$productos[$i]["ventas"].",
-          color    : '".$colores[$i]."',
-          highlight: '".$colores[$i]."',
-          label    : '".$productos[$i]["descripcion"]."'
-        }, ";
+    echo "{
+      value    : ".$productos[$i]["ventas"].",
+      color    : '".$colores[$i]."',
+      highlight: '".$colores[$i]."',
+      label    : '".$productos[$i]["descripcion"]."'
+    },";
 
-      }
-
-     ?>    
-  
+  }
+    
+   ?>
   ];
   var pieOptions     = {
     // Boolean - Whether we should show a stroke on each segment
